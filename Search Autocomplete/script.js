@@ -90,3 +90,40 @@ let results = [];
 
 const result__box = document.getElementById("result__box");
 const input = document.getElementById("input");
+
+input.addEventListener("input", () => {
+  setTimeout(() => {
+    const givenValue = input.value.trim().toLowerCase();
+
+    if (!givenValue) {
+      result__box.classList.add("hidden");
+      return;
+    }
+
+    results = [
+      ...new Set(
+        availableKeywords.filter((keyword) =>
+          keyword.toLocaleLowerCase().includes(givenValue)
+        )
+      ),
+    ];
+
+    if (results.length > 6) {
+      results.splice(0, 6);
+    }
+
+    result__box.innerHTML = "";
+
+    results.forEach((result) => {
+      const liEl = document.createElement("li");
+      liEl.textContent = result;
+      liEl.className =
+        "text-slate-700 rounded-md p-4 cursor-pointer hover:bg-slate-200 transition-all duration-200";
+
+      console.log();
+
+      result__box.classList.remove("hidden");
+      result__box.append(liEl);
+    });
+  }, 300);
+});
